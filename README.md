@@ -24,7 +24,9 @@ Block Diagram
 ![project image](img/Block_Diagram.png)
 
 After completing the RTL code, the verification is carried out using the C code SUM<br>
+Should compare simulation and asm to see if the designed riscv-32i works well.<br>
 ![project image](img/verification.png)
+
 
 
 
