@@ -24,3 +24,7 @@ Block Diagram
 ![project image](img/Block_Diagram.png)
 
 
+
+
+in the bottom, it is my presentation.   
+[RISCV-32I_정민수.pptx](https://github.com/user-attachments/files/26041418/RISCV-32I_.pptx)
