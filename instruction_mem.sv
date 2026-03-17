@@ -5,7 +5,7 @@ module instruction_mem (
     output [31:0] instr_data
 );
 
-    logic [31:0] rom[0:255]; // 32비트였는데 너무 적어서 늘림
+    logic [31:0] rom[0:255];
 
     initial begin
         $readmemh("riscv_rv32i_rom_data.mem",rom);
