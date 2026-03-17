@@ -23,8 +23,8 @@ JAL_TYPE = When making a function call on your PC, jump to the function position
 Block Diagram
 ![project image](img/Block_Diagram.png)
 
-After completing the RTL code, the verification is carried out using the C code SUM
-![project image](img/verificaiton.png)
+After completing the RTL code, the verification is carried out using the C code SUM<br>
+![project image](img/verification.png)
 
 
 
