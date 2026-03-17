@@ -11,8 +11,8 @@ TYPE : R_TYPE, B_TYPE, S_TYPE, JALR_TYPE, IL_TYPE, I_TYPE, LUI_TYPE, AUIPC_TYPE,
 
 Function
 R_TYPE = Pure Calculation Type <br>
-B_TYPE<br> = Jump to a different position when the condition is met
-S_TYPE<br> = Save the values in the register to memory
+B_TYPE = Jump to a different position when the condition is met <br>
+S_TYPE = Save the values in the register to memory <br>
 JALR_TYPE = When making a function call in Register, jump to the function position and store the address to return<br>
 IL_TYPE = Read data from memory and import to register<br>
 I_TYPE = almost same like R_TYPE, but required when calculating by adding a small constant immediately(Imm)<br>
