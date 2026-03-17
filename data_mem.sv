@@ -10,7 +10,7 @@ module data_mem (
     output logic [31:0] drdata
 );
 
-    logic [31:0] dmem[0:255]; // dmem[0:1023]로 바꿔라?
+    logic [31:0] dmem[0:255];
 
     always_ff @(posedge clk) begin
         if (dwe) begin  // S-TYPE
