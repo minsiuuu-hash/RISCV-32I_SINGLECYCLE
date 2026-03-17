@@ -9,7 +9,7 @@ Design Goal
 I use 9 types because there are 9 types of OPcode(except FENCE, ECALL, EBREAK)<br>
 TYPE : R_TYPE, B_TYPE, S_TYPE, JALR_TYPE, IL_TYPE, I_TYPE, LUI_TYPE, AUIPC_TYPE, JAL_TYPE<br>
 
-Function
+Function <br>
 R_TYPE = Pure Calculation Type <br>
 B_TYPE = Jump to a different position when the condition is met <br>
 S_TYPE = Save the values in the register to memory <br>
