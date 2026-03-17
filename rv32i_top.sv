@@ -20,10 +20,11 @@
 // endmodule
 
 
+// want to watch slack time
 module rv32i_top (
     input clk,
     input rst,
-    output [15:0] led  // 16개의 LED 출력 추가
+    output [15:0] led 
 );
     logic dwe;
     logic [2:0] o_funct3;
@@ -35,9 +36,6 @@ module rv32i_top (
         .*,
         .i_funct3(o_funct3)
     );
-
-    // 하드웨어가 삭제되지 않도록 내부 신호를 외부 포트에 연결
-    // 예: 현재 메모리에 쓰려는 주소의 하위 16비트를 LED로 확인
     assign led = daddr[15:0]; 
 
 endmodule
