@@ -17,13 +17,13 @@
     1) 명령어 읽기와 데이터 접근이 동시에 몰리면 충돌남
     2) 이걸 Von Neumann bottleneck 이라고 함
 
-하버드 구조로 설계를 진행함.
+본 설계는 하버드 구조를 사용함.
 
 각 모듈 설명
 1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
 2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
 3. Register File = ALU 연산을 위한 임시 저장 공간
-4. ALU = 연산기( + , - , / , * , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
+4. ALU = 연산기( + , - , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
 6. Control Unit = CPU의 동작을 제어함 (총 6가지의 TYPE), img파일의 controlunit.png를 확인.
 
@@ -31,27 +31,26 @@
 
 1. 단순 연산 TYPE
    1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
-   2) I-TYPE : Register에 저장되어있는 RS1 값과 Imm값(초기화X)을 ALU를 통해 연산을 함.
-               Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
+   2) I-TYPE : Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
 2. 분기(JUMP) TYPE
-   1) B-TYPE : 돌아올 주소를 Register File에 저장하지않으며, 조건이 참일때 분기(JUMP)함
-   2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, register에서 RS1 + Imm 값으로 분기(JUMP)함.
-   3) JAL-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값으로 분기(JUMP)함.
+   1) B-TYPE : 돌아올 주소를 저장하지않으며, 조건이 참일때 분기함
+   2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
+   3) JAL-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
 
-3. 큰 주소 TYPE(어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
+3. 큰 상수/주소 TYPE 또는 상위 Immediate TYPE (어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
    1)LUI-TYPE : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
              EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.
-            상위 20비트 imm + 하위 12비트 (12 imm을 사용하는 다른 명령어)<br>
-                rd = imm << 12<br>
+            상위 20비트 imm + 하위 12비트 (12 imm을 사용하는 다른 명령어)
+                rd = imm << 12
    2)AUIPC-TYPE : 현재 PC를 기준으로 먼 주소를 써야 할 때, 작은 immediate(12비트)만으로는 부족함
             그래서 AUIPC가 PC + (상위 20비트 << 12) 를 먼저 계산해서 레지스터에 넣어둠
             그 다음 다른 명령어가 하위 12비트를 더해서 진짜 목표 주소를 완성함
-                rd = pc + (imm << 12) 현재 pc값 기준
+                rd = pc + (imm << 12)
 
-4. RAM Data Memroy TYPE
+4. RAM Data Memory TYPE
     word형식으로 진행
-    Half Word의 경우 0,2,4 ... 짝수번째만 입력이 가능하고, 나머지는 misaligned으로 지정.
-    Word의 경우 0 ,4 , 8 ... 4의 배수만 입력이 가능하고, 나머지는 misaligned으로 지정.
+    Half Word의 경우 0,2,4 ... 짝수주소만 허용이 가능하고, 나머지는 misaligned으로 지정.
+    Word의 경우 0 ,4 , 8 ... 4의 배수주소만 허용이 가능하고, 나머지는 misaligned으로 지정.
     1)S-TYPE : Store 명령어 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
