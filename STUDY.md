@@ -37,6 +37,7 @@
    1) B-TYPE : 돌아올 주소를 Register File에 저장하지않으며, 조건이 참일때 분기(JUMP)함
    2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, register에서 분기(JUMP)함.
    3) JAL-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 분기(JUMP)함.
+
 3. 큰 주소 TYPE(어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)<br>
    1)LUI : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.<br>
             EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.<br>
