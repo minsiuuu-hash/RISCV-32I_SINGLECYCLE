@@ -23,38 +23,6 @@
 1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
 2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
 3. Register File = ALU 연산을 위한 임시 저장 공간
-4. ALU = 연산기( + , - , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
-5. Data Memory = Data를 저장 or 불러오기 위한 memory
-6. Control Unit = CPU의 동작을 제어함 (총 9가지의 TYPE), img파일의 controlunit.png를 확인.
-
-1. 단순 연산 TYPE
-   1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
-   2) I-TYPE : 총 2가지의 유형이 존재.
-1. 하버드 아키텍처
-    명령어 메모리와 데이터 메모리가 분리되어 있음.
-  장점
-    1) 명령어 fetch랑 데이터 access를 동시에 할 수 있음. 그래서 속도 면에서 유리함
-    2) 파이프라인 설계할 때 편함
-    3) 주소가 총 32비트가 존재함.
-  단점
-    1) 구조가 좀 더 복잡해짐
-    2) 메모리를 따로 관리해야 함
-2. 폰노이만 아키텍처
-    명령어와 데이터가 같은 메모리를 씀.
-  장점
-    1) 구조가 단순함
-    2) 설계가 쉬움
-    3) 메모리 공간을 유연하게 쓸 수 있음
-  단점
-    1) 명령어 읽기와 데이터 접근이 동시에 몰리면 충돌남
-    2) 이걸 Von Neumann bottleneck 이라고 함
-
-하버드 구조로 설계를 진행함.
-
-각 모듈 설명
-1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
-2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
-3. Register File = ALU 연산을 위한 임시 저장 공간
 4. ALU = 연산기( + , - , / , * , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
 6. Control Unit = CPU의 동작을 제어함 (총 6가지의 TYPE), img파일의 controlunit.png를 확인.
