@@ -29,7 +29,11 @@
 6. Control Unit = CPU의 동작을 제어함 (총 9가지의 TYPE)
     ![project image](img/controlunit.png)
 
-
+1. 단순 연산 TYPE
+   1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
+   2) I-TYPE : Register에 저장되어있는 RS1 값과 Imm값(초기화X)을 ALU를 통해 연산을 함.
+                SUB가 없는데, 이는 ADDI로 대체가 가능해서 그럼.
+2. 분기(JUMP) TYPE
 어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다.
 그래서 LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
 EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.
