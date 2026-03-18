@@ -26,8 +26,7 @@
 3. Register File = ALU 연산을 위한 임시 저장 공간
 4. ALU = 연산기( + , - , / , * , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
-6. Control Unit = CPU의 동작을 제어함 (총 9가지의 TYPE)
-    ![project image](img/controlunit.png)
+6. Control Unit = CPU의 동작을 제어함 (총 9가지의 TYPE), img파일의 controlunit.png를 확인.
 
 1. 단순 연산 TYPE
    1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
