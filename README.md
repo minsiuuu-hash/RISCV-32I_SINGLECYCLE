@@ -1,6 +1,7 @@
 Tool : Vivado
 
 I made RISCV-32I SINGLECYCLE(OPEN ISA source)
+Architecture : Harvard
 
 Design Goal
 
