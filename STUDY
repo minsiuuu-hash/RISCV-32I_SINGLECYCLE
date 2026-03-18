@@ -18,6 +18,17 @@
     1) 명령어 읽기와 데이터 접근이 동시에 몰리면 충돌남
     2) 이걸 Von Neumann bottleneck 이라고 함
 
+하버드 구조로 설계를 진행함.
+
+각 모듈 설명
+1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
+2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
+3. Register File = ALU 연산을 위한 임시 저장 공간
+4. ALU = 연산기( + , - , / , * , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
+5. Data Memory = Data를 저장 or 불러오기 위한 memory
+6. Control Unit = CPU의 동작을 제어함 (총 9가지의 TYPE)
+
+
 어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다.
 그래서 LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
 EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.
