@@ -32,9 +32,10 @@
 1. 단순 연산 TYPE
    1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
    2) I-TYPE : Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
+
 2. 분기(JUMP) TYPE
-   1) B-TYPE : 돌아올 주소를 저장하지않으며, 조건이 참일때 분기함
-   2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
+   1) B-TYPE : 돌아올 주소를 저장하지 않으며, 조건이 참일때 분기함
+   2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, Register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
    3) JAL-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
 
 3. 큰 상수/주소 TYPE 또는 상위 Immediate TYPE (어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
@@ -48,14 +49,14 @@
                 rd = pc + (imm << 12)
 
 4. RAM Data Memory TYPE
-    word형식으로 진행
-    Half Word의 경우 0,2,4 ... 짝수주소만 허용이 가능하고, 나머지는 misaligned으로 지정.
-    Word의 경우 0 ,4 , 8 ... 4의 배수주소만 허용이 가능하고, 나머지는 misaligned으로 지정.
+    Data Memory는 word 형식으로 설계함.
+    Half Word의 경우 0,2,4 ... 짝수 주소만 허용되며, 나머지는 misaligned으로 지정.
+    Word의 경우 0 ,4 , 8 ... 4의 배수 주소만 허용되, 나머지는 misaligned으로 지정.
     1)S-TYPE : Store 명령어 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
                 B = Byte, H = Half Word, W = Word
-    2)IL -TYPE : Load 명령어 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
+    2)IL-TYPE : Load 명령어 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, Data Memory에서 읽은 값을 rd에 저장한다.
                 읽기 크기와 부호 확장 방식에 따라 LB, LH, LW, LBU, LHU로 나뉜다.
 
