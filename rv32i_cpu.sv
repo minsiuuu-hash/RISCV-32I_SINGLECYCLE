@@ -99,7 +99,7 @@ module control_unit (
                 rf_we       = 1'b1;
                 branch      = 1'b0;
                 jal         = 1'b1;
-                alu_src     = 1'b1;
+                alu_src     = 1'b0;
                 jalr        = 1'b1;
                 alu_control = 4'b0000;
                 rfwd_src    = 3'b100;
@@ -146,6 +146,7 @@ module control_unit (
                 branch      = 1'b0;
                 jal         = 1'b0;
                 alu_src     = 1'b0;
+                jalr        = 1'b0;
                 alu_control = 4'b0000;
                 rfwd_src    = 3'b011;
                 o_funct3    = 3'b000;
