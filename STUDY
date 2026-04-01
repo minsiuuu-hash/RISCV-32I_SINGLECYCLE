@@ -19,6 +19,13 @@
 
 본 설계는 하버드 구조를 사용함.
 
+EXCEL 파일, 즉 스펙을 직접 확인해보면 알지만 , IMM값의 배치가 지멋대로로 위치되어있는것으로 보임.
+이는 하드웨어를 단순하게 만들기 위한 의도된 배치임.
+    1) 레지스터 필드 위치 고정: rs1, rs2, rd를 같은 위치에 두면 디코더가 단순해짐.
+    2) immediate는 sign-extended가 기본: 그래서 부호비트(sign bit)를 항상 inst[31]에 둠.
+        sign extension을 decode와 병렬로 빨리 하려고 그렇게 배치함.
+    3) B-type, J-type처럼 흩어진 배치는 immediate mux 비용과 signal fanout을 줄이기 위한 것임.
+
 각 모듈 설명
 1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
 2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
