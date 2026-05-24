@@ -38,6 +38,12 @@ EXCEL 파일, 즉 스펙을 직접 확인해보면 알지만 , IMM값의 배치�
         sign extension을 decode와 병렬로 빨리 하려고 그렇게 배치함.
     3) B-type, J-type처럼 흩어진 배치는 immediate mux 비용과 signal fanout을 줄이기 위한 것임.
 
+컴퓨터의 성능은 명령어 개수, 클럭 사이클시간, 명령어당 클럭 사이클 수에 의해서 결정됌. 
+
+PC를 메모리에보내서 메모리로부터 명령어를 가져옴
+읽을 레지스터를 선택하는 명령어 필드를 사용하여 하나 또는 2개의 레지스터를 읽는다.  
+LW 명령어는 레지스터하나만 읽으면 되지만 대부분의 다른명령어는 레지스터 2개를 읽는다.  
+
 각 모듈 설명
 1. PC = Instruction의 실행순서를 결정, PC + 4 or JUMP(분기)
 2. Instruction Memory = Instruction을 저장한 memory, Byte Address를 사용
@@ -71,11 +77,11 @@ EXCEL 파일, 즉 스펙을 직접 확인해보면 알지만 , IMM값의 배치�
     Data Memory는 word 형식으로 설계함.
     Half Word의 경우 0,2,4 ... 짝수 주소만 허용되며, 나머지는 misaligned으로 지정.
     Word의 경우 0 ,4 , 8 ... 4의 배수 주소만 허용되, 나머지는 misaligned으로 지정.
-    1)S-TYPE : Store 명령어 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
+    1)S-TYPE : "Store 명령어" 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
                 B = Byte, H = Half Word, W = Word
-    2)IL-TYPE : Load 명령어 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
+    2)IL-TYPE : "Load 명령어" 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, Data Memory에서 읽은 값을 rd에 저장한다.
                 읽기 크기와 부호 확장 방식에 따라 LB, LH, LW, LBU, LHU로 나뉜다.
 
