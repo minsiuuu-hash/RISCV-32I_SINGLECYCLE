@@ -1,35 +1,53 @@
-Tool : Vivado
+# RISC-V RV32I Single-Cycle CPU
 
-Architecture : Harvard<br>
-I made RISCV-32I SINGLECYCLE(OPEN ISA source)<br>
+Tool : Vivado  
+Architecture : Harvard  
 
-Design Goal<br>
+I made RISC-V RV32I Single-Cycle CPU.  
+RISC-V is an open ISA.
 
-![project image](img/TYPE_EXCEL.png)
+---
 
-I use 9 types because there are 9 types of OPcode(except FENCE, ECALL, EBREAK)<br>
-TYPE : R_TYPE, B_TYPE, S_TYPE, JALR_TYPE, IL_TYPE, I_TYPE, LUI_TYPE, AUIPC_TYPE, JAL_TYPE<br>
+## Design Goal
 
-Function <br>
-R_TYPE = Pure Calculation Type <br>
-B_TYPE = Jump to a different position when the condition is met <br>
-S_TYPE = Save the values in the register to memory <br>
-JALR_TYPE = When making a function call in Register, jump to the function position and store the address to return<br>
-IL_TYPE = Read data from memory and import to register<br>
-I_TYPE = almost same like R_TYPE, but required when calculating by adding a small constant immediately(Imm)<br>
-LUI_TYPE = Create high value top 20 bits, Why do you need it? Other reminders usually only handle 12 bits, so you can't create big constants or big addresses at once. So first, you need a command to make the top<br>
-AUIPC_TYPE = Calculate the address based on the current PC, Why do you need it? The program can vary where the memory goes, so it needs to calculate the address based on the current location (PC-relative) rather than the absolute address<br>
-JAL_TYPE = When making a function call on your PC, jump to the function position and store the address that will come back<br>
+![project image](img/riscv_design_goal.png)
 
-Block Diagram
-![project image](img/Block_Diagram.png)
+I used 9 types because there are 9 types of opcode except `FENCE`, `ECALL`, and `EBREAK`.
 
-After completing the RTL code, the verification is carried out using the C code SUM<br>
-Should compare simulation and asm to see if the designed riscv-32i works well.<br>
+## Instruction Types
+
+| Type | Function |
+|---|---|
+| `R_TYPE` | Pure calculation type |
+| `B_TYPE` | Jump to a different position when the condition is met |
+| `S_TYPE` | Save the values in the register to memory |
+| `JALR_TYPE` | When making a function call using a register, jump to the function position and store the return address |
+| `IL_TYPE` | Read data from memory and import it to register |
+| `I_TYPE` | Almost same as `R_TYPE`, but used when calculating with a small immediate constant |
+| `LUI_TYPE` | Create high value top 20 bits. Other immediate fields usually handle only 12 bits, so this is needed to create big constants or big addresses |
+| `AUIPC_TYPE` | Calculate the address based on the current PC. It is used for PC-relative address calculation instead of absolute address calculation |
+| `JAL_TYPE` | When making a function call using the PC, jump to the function position and store the return address |
+
+---
+
+## Block Diagram
+
+![project image](img/block_diagram.png)
+
+---
+
+## Verification
+
+After completing the RTL code, the verification was carried out using the C code SUM.
+
+The simulation result and assembly code should be compared to check whether the designed RISC-V RV32I CPU works correctly.
+
 ![project image](img/verification.png)
 
+---
 
+## Presentation
 
+In the bottom, it is my presentation.
 
-in the bottom, it is my presentation.   
-[RISCV-32I_정민수.pptx](https://github.com/user-attachments/files/26041418/RISCV-32I_.pptx)
+- [RISCV-32I_정민수.pptx](RISCV-32I_정민수.pptx)
