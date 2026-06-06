@@ -50,4 +50,5 @@ The simulation result and assembly code should be compared to check whether the 
 
 In the bottom, it is my presentation.
 
-- [RISCV-32I_정민수.pptx](RISCV-32I_정민수.pptx)
+- [RISCV-32I.pdf](https://github.com/user-attachments/files/28661457/RISCV-32I.pdf)
+
