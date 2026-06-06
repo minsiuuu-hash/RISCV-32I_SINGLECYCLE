@@ -32,7 +32,7 @@ I used 9 types because there are 9 types of opcode except `FENCE`, `ECALL`, and 
 
 ## Block Diagram
 
-![project image](img/block_diagram.png)
+![project image](img/Block_Diagram.png)
 
 ---
 
