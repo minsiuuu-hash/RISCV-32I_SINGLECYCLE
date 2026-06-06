@@ -10,7 +10,7 @@ RISC-V is an open ISA.
 
 ## Design Goal
 
-![project image](img/riscv_design_goal.png)
+![project image](img/TYPE_EXCEL.png)
 
 I used 9 types because there are 9 types of opcode except `FENCE`, `ECALL`, and `EBREAK`.
 
