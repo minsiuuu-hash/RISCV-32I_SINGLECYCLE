@@ -50,7 +50,7 @@ LW 명령어는 레지스터하나만 읽으면 되지만 대부분의 다른명
 1. PC = Instruction의 실행순서를 결정, PC + 4(Byte Addressing) or JUMP(분기). 현재 명령어의 주소를 가지고 있는 레지스터.
 2. Instruction Memory(ROM) = Instruction을 저장한 memory, Byte Address를 사용. 프로그램의 명령어를 저장하고 주소가 주어지면 해당 명령어를 보내주는 메모리 유닛. 
 3. Register File = ALU 연산을 위한 임시 저장 공간
-4. ALU = 연산기( + , - , >>, and, or 등등), 출력 결과를 Register File or Memory에 저장
+4. ALU = 연산기( + , - , >> , and , or 등등), 출력 결과를 Register File or Memory에 저장
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
 6. Control Unit = CPU의 동작을 제어함 (총 6가지의 TYPE), img파일의 controlunit.png를 확인.
 
@@ -67,20 +67,20 @@ LW 명령어는 레지스터하나만 읽으면 되지만 대부분의 다른명
 
 3. 큰 상수/주소 TYPE (어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
    1)LUI-TYPE : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
-             EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.
-            상위 20비트 imm + 하위 12비트 (12 imm을 사용하는 다른 명령어)
+                EX) 12345678이면 12345000을 미리 저장해놓고(LUI) 나중에 12비트의 값을 채워넣음.
+                상위 20비트 imm + 하위 12비트 (12 imm을 사용하는 다른 명령어)
                 rd = imm << 12
    2)AUIPC-TYPE : 현재 PC를 기준으로 먼 주소를 써야 할 때, 작은 immediate(12비트)만으로는 부족함
-            그래서 AUIPC가 PC + (상위 20비트 << 12) 를 먼저 계산해서 레지스터에 넣어둠
-            그 다음 다른 명령어가 하위 12비트를 더해서 진짜 목표 주소를 완성함
-                rd = pc + (imm << 12)
+                  그래서 AUIPC가 PC + (상위 20비트 << 12) 를 먼저 계산해서 레지스터에 넣어둠
+                  그 다음 다른 명령어가 하위 12비트를 더해서 진짜 목표 주소를 완성함
+                   rd = pc + (imm << 12)
 
 4. RAM Data Memory TYPE
     Data Memory는 word 형식으로 설계함.
     Half Word의 경우 0,2,4 ... 짝수 주소만 허용되며, 나머지는 misaligned으로 지정.
     Word의 경우 0 ,4 , 8 ... 4의 배수 주소만 허용되, 나머지는 misaligned으로 지정.
     1)S-TYPE : "Store 명령어" 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
-                ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값을 해당 주소에 저장한다.
+                ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값(Data Memory에 저장 할 값)을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
                 B = Byte, H = Half Word, W = Word
     2)IL-TYPE : "Load 명령어" 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
