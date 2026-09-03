@@ -46,14 +46,14 @@ Single-Cycle = 하나의 명령어가 Fetch → Decode → Execute → Memory �
 따라서 가장 긴 Data Path(Critical Path)가 Clock Period를 결정함.
 대표적으로 Load 명령어는 PC → Instruction Memory → Register File → ALU → Data Memory → Register File Write Back까지 거쳐야 하므로 긴 경로를 가짐.
 
-PC를 메모리에보내서 메모리로부터 명령어를 가져옴
+PC를 메모리에 보내서 메모리로부터 명령어를 가져옴
 읽을 레지스터를 선택하는 명령어 필드를 사용하여 하나 또는 2개의 레지스터를 읽는다.  
-LW 명령어는 레지스터하나만 읽으면 되지만 대부분의 다른명령어는 레지스터 2개를 읽는다.  
+LW 명령어는 레지스터 하나만 읽으면 되지만 대부분의 다른 명령어는 레지스터 2개를 읽는다.  
 
 각 모듈 설명
 1. PC = Instruction의 실행순서를 결정, PC + 4(Byte Addressing) or JUMP(분기). 현재 명령어의 주소를 가지고 있는 레지스터.
 2. Instruction Memory(ROM) = Instruction을 저장한 memory, Byte Address를 사용. 프로그램의 명령어를 저장하고 주소가 주어지면 해당 명령어를 보내주는 메모리 유닛. 
-3. Register File = ALU 연산을 위한 임시 저장 공간
+3. Register File = CPU 내부의 범용 Register 집합. 연산에 사용할 Operand를 읽고, 연산 결과를 저장함. 32개의 32-bit Register(x0 ~ x31)가 존재. x0는 항상 0으로 고정.
 4. ALU = 연산기( + , - , >> , and , or 등등), 출력 결과를 Register File or Memory에 저장
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
 6. Control Unit = CPU의 동작을 제어함 (총 6가지의 TYPE), img파일의 controlunit.png를 확인.
