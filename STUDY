@@ -9,6 +9,8 @@ RISC-V(Reduced Instruction Set Computer)         CISC(Complex Instruction Set Co
 | 회로 구조   | 단순한 편                        | 복잡한 편               |
 | 예시        | ARM, RISC-V                     | x86                 |
 
+ISA = Instruction Set Architecture, 명령어 집합 구조
+CPU가 어떤 명령어를 이해하고, 명령어 비트가 어떻게 생겼으며, 각 명령어가 어떤 동작을 해야 하는지를 정한 규칙
 
 총 2가지의 유형이 존재.
 1. 하버드 아키텍처
@@ -63,19 +65,19 @@ Instruction Format = R / I / S / B / U / J 총 6가지
 본 설계의 Control Unit에서는 Opcode 및 동작에 따라 9개의 Control Case로 세분화하여 처리.
 
 1. 단순 연산 TYPE
-   1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
-   2) I-TYPE : Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
+   1) R-TYPE (R-format) : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
+   2) I-TYPE (I-format) : Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
 
 2. 분기(JUMP) TYPE
-   1) B-TYPE : 돌아올 주소를 저장하지 않으며, 조건이 참일때 분기함
-   2) JALR-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, Register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
-   3) JAL-TYPE : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
+   1) B-TYPE (B-format) : 돌아올 주소를 저장하지 않으며, 조건이 참일때 분기함
+   2) JALR-TYPE (I-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, Register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
+   3) JAL-TYPE (J-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
 
 3. 큰 상수/주소 TYPE (어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
-   1)LUI-TYPE : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
+   1) LUI-TYPE (U-format) : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
                 ex) 0x12345678 같은 큰 값을 만들 때 LUI로 상위 부분을 먼저 구성한 뒤 ADDI 등의 명령어를 이용해 하위 부분을 조합.
                     rd = imm[31:12] << 12
-   2)AUIPC-TYPE : 현재 PC를 기준으로 먼 주소를 써야 할 때, 작은 immediate(12비트)만으로는 부족함
+   2) AUIPC-TYPE (U-format) : 현재 PC를 기준으로 먼 주소를 써야 할 때, 작은 immediate(12비트)만으로는 부족함
                   그래서 AUIPC가 PC + (상위 20비트 << 12) 를 먼저 계산해서 레지스터에 넣어둠
                   그 다음 다른 명령어가 하위 12비트를 더해서 진짜 목표 주소를 완성함
                    rd = pc + (imm << 12)
@@ -86,11 +88,11 @@ Instruction Format = R / I / S / B / U / J 총 6가지
     Halfword : 주소 하위 1bit가 0이어야 함 (2Byte 정렬) 0,2,4 ... 짝수만 허용, 나머지는 misaligned
     Word     : 주소 하위 2bit가 00이어야 함 (4Byte 정렬) 0,4,8... 4의 배수만 허용, 나머지는 misaligned
     ※ 본 설계에서는 Misaligned 접근을 비정상 접근으로 판단하여 X 처리.
-    1)S-TYPE : "Store 명령어" 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
+    1) S-TYPE (S-format) : "Store 명령어" 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값(Data Memory에 저장 할 값)을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
                 B = Byte, H = Half Word, W = Word
-    2)IL-TYPE : "Load 명령어" 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
+    2) IL-TYPE (I-format) : "Load 명령어" 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, Data Memory에서 읽은 값을 rd에 저장한다.
                 읽기 크기와 부호 확장 방식에 따라 LB, LH, LW, LBU, LHU로 나뉜다.
                 LB  : 8bit  읽고 Sign Extension
