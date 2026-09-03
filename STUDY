@@ -71,8 +71,8 @@ Instruction Format = R / I / S / B / U / J 총 6가지
 
 2. 분기(JUMP) TYPE
    1) B-TYPE (B-format) : 돌아올 주소를 저장하지 않으며, 조건이 참일때 분기함
-   2) JALR-TYPE (I-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, Register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
-   3) JAL-TYPE (J-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
+   2) JALR-TYPE (I-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, Target = (RS1 + Imm) & ~1 주소로 분기(JUMP)함.
+   3) JAL-TYPE (J-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, PC + Imm 주소로 분기(JUMP)함.
 
 3. 큰 상수/주소 TYPE
    1) LUI-TYPE (U-format) : 20bit Immediate를 상위 비트에 배치하여 큰 상수나 주소의 Base를 만드는 데 사용.
