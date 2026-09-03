@@ -48,8 +48,7 @@ Single-Cycle = 하나의 명령어가 Fetch → Decode → Execute → Memory �
 따라서 가장 긴 Data Path(Critical Path)가 Clock Period를 결정함.
 대표적으로 Load 명령어는 PC → Instruction Memory → Register File → ALU → Data Memory → Register File Write Back까지 거쳐야 하므로 긴 경로를 가짐.
 
-PC를 메모리에 보내서 메모리로부터 명령어를 가져옴
-읽을 레지스터를 선택하는 명령어 필드를 사용하여 하나 또는 2개의 레지스터를 읽는다.  
+PC를 메모리에 보내서 메모리로부터 명령어를 가져옴.
 명령어에 따라 Register File에서 0개, 1개 또는 2개의 Source Register를 읽음.
 ex) LW는 rs1, R-type은 rs1/rs2를 읽음.
 
