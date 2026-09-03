@@ -92,6 +92,11 @@ Instruction Format = R / I / S / B / U / J 총 6가지
     2)IL-TYPE : "Load 명령어" 형식으로, Data Memory에 저장된 값을 Register File로 읽어올 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, Data Memory에서 읽은 값을 rd에 저장한다.
                 읽기 크기와 부호 확장 방식에 따라 LB, LH, LW, LBU, LHU로 나뉜다.
+                LB  : 8bit  읽고 Sign Extension
+                LH  : 16bit 읽고 Sign Extension
+                LW  : 32bit 읽음
+                LBU : 8bit  읽고 Zero Extension
+                LHU : 16bit 읽고 Zero Extension
 
 
 
