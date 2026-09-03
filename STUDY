@@ -69,7 +69,7 @@ Instruction Format = R / I / S / B / U / J 총 6가지
    1) R-TYPE (R-format) : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
    2) I-TYPE (I-format) : Register에 저장된 RS1 값과 instruction에 포함된 immediate 값을 ALU로 연산함.
 
-2. 분기(JUMP) TYPE
+2. 분기 / JUMP TYPE
    1) B-TYPE (B-format) : 돌아올 주소를 저장하지 않으며, 조건이 참일때 분기함
    2) JALR-TYPE (I-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, Target = (RS1 + Imm) & ~1 주소로 분기(JUMP)함.
    3) JAL-TYPE (J-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, PC + Imm 주소로 분기(JUMP)함.
