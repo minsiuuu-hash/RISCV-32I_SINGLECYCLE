@@ -29,7 +29,7 @@ RISC-V(Reduced Instruction Set Computer)         CISC(Complex Instruction Set Co
     1) 명령어 읽기와 데이터 접근이 동시에 몰리면 충돌남
     2) 이걸 Von Neumann bottleneck 이라고 함
 
-본 설계는 하버드 구조를 사용함.
+본 설계는 Instruction Memory와 Data Memory를 분리한 Harvard 구조를 사용함.
 
 EXCEL 파일, 즉 스펙을 직접 확인해보면 알지만 , IMM값의 배치가 지멋대로로 위치되어있는것으로 보임.
 이는 하드웨어를 단순하게 만들기 위한 의도된 배치임.
