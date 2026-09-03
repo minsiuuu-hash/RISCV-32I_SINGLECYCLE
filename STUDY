@@ -1,4 +1,4 @@
-RISC-V(Reduced Instruction Set Computer)         CISC-V(Complex Instruction Set Computer)
+RISC-V(Reduced Instruction Set Computer)         CISC(Complex Instruction Set Computer)
 | 구분        | RISC                            | CISC                |
 | ------     | ---------------------            | ------------------- |
 | 명령어      | 단순함                           | 복잡함                 |
