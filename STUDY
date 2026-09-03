@@ -1,4 +1,4 @@
-RISC-V(Reduced Instruction Set Computer)         CISC(Complex Instruction Set Computer)
+RISC (Reduced Instruction Set Computer)          CISC (Complex Instruction Set Computer)
 | 구분        | RISC                            | CISC                |
 | ------     | ---------------------            | ------------------- |
 | 명령어      | 단순함                           | 복잡함                 |
@@ -12,7 +12,7 @@ RISC-V(Reduced Instruction Set Computer)         CISC(Complex Instruction Set Co
 ISA = Instruction Set Architecture, 명령어 집합 구조
 CPU가 어떤 명령어를 이해하고, 명령어 비트가 어떻게 생겼으며, 각 명령어가 어떤 동작을 해야 하는지를 정한 규칙
 
-총 2가지의 유형이 존재.
+대표적인 메모리 구조는 2가지가 존재.
 1. 하버드 아키텍처
     명령어 메모리와 데이터 메모리가 분리되어 있음.
   장점
@@ -28,8 +28,8 @@ CPU가 어떤 명령어를 이해하고, 명령어 비트가 어떻게 생겼으
     2) 설계가 쉬움
     3) 메모리 공간을 유연하게 쓸 수 있음
   단점
-    1) 명령어 읽기와 데이터 접근이 동시에 몰리면 충돌남
-    2) 이걸 Von Neumann bottleneck 이라고 함
+    1) 명령어 Fetch와 Data Access가 같은 Memory/Bus를 공유하므로 동시에 접근하는 데 제약이 있음
+    2) 이로 인해 Memory Bandwidth가 성능을 제한할 수 있는데 이를 Von Neumann Bottleneck이라고 함
 
 본 설계는 Instruction Memory와 Data Memory를 분리한 Harvard 구조를 사용함.
 
@@ -50,10 +50,11 @@ Single-Cycle = 하나의 명령어가 Fetch → Decode → Execute → Memory �
 
 PC를 메모리에 보내서 메모리로부터 명령어를 가져옴
 읽을 레지스터를 선택하는 명령어 필드를 사용하여 하나 또는 2개의 레지스터를 읽는다.  
-LW 명령어는 레지스터 하나만 읽으면 되지만 대부분의 다른 명령어는 레지스터 2개를 읽는다.  
+명령어에 따라 Register File에서 0개, 1개 또는 2개의 Source Register를 읽음.
+ex) LW는 rs1, R-type은 rs1/rs2를 읽음.
 
 각 모듈 설명
-1. PC = Instruction의 실행순서를 결정, PC + 4(Byte Addressing) or Branch/Jump Target. 현재 명령어의 주소를 가지고 있는 레지스터.
+1. PC = Instruction의 실행순서를 결정, PC + 4(32bit Instruction이므로 Byte Addressing) or Branch/Jump Target. 현재 명령어의 주소를 가지고 있는 레지스터.
 2. Instruction Memory(ROM) = Instruction을 저장한 memory, Byte Address를 사용. 프로그램의 명령어를 저장하고 주소가 주어지면 해당 명령어를 보내주는 메모리 유닛. 
 3. Register File = CPU 내부의 범용 Register 집합. 연산에 사용할 Operand를 읽고, 연산 결과를 저장함. 32개의 32-bit Register(x0 ~ x31)가 존재. x0는 항상 0으로 고정.
 4. ALU = 산술/논리 연산(+,-,shift,and,or 등)을 수행함. 명령어에 따라 ALU 결과는 Register File에 Write Back되거나, Load/Store의 Memory Address 계산 등에 사용됨.
@@ -73,14 +74,19 @@ Instruction Format = R / I / S / B / U / J 총 6가지
    2) JALR-TYPE (I-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, Register에서 RS1 + Imm 값을 이용해 분기(JUMP)함.
    3) JAL-TYPE (J-format) : 함수가 호출되면, 돌아올 주소를 Register File에 PC+4로 저장하며, PC에서 PC + Imm 값을 이용 분기(JUMP)함.
 
-3. 큰 상수/주소 TYPE (어떤 명령어들은 immediate가 12비트밖에 되지 않아 32비트 큰 값이나 큰 주소를 한 번에 만들 수 없다)
-   1) LUI-TYPE (U-format) : LUI가 상위 20비트를 먼저 만들고, 이후 addi, lw, sw, jalr 같은 12비트 immediate 명령어와 조합해서 하위 12비트를 채운다.
-                ex) 0x12345678 같은 큰 값을 만들 때 LUI로 상위 부분을 먼저 구성한 뒤 ADDI 등의 명령어를 이용해 하위 부분을 조합.
-                    rd = imm[31:12] << 12
-   2) AUIPC-TYPE (U-format) : 현재 PC를 기준으로 먼 주소를 써야 할 때, 작은 immediate(12비트)만으로는 부족함
-                  그래서 AUIPC가 PC + (상위 20비트 << 12) 를 먼저 계산해서 레지스터에 넣어둠
-                  그 다음 다른 명령어가 하위 12비트를 더해서 진짜 목표 주소를 완성함
-                   rd = pc + (imm << 12)
+3. 큰 상수/주소 TYPE
+   1) LUI-TYPE (U-format) : 20bit Immediate를 상위 비트에 배치하여 큰 상수나 주소의 Base를 만드는 데 사용.
+                큰 상수를 만들 때는 ADDI 등과 조합할 수 있고,
+                Load/Store/JALR에서는 만들어진 Base Address에 12bit Offset을 더해 사용할 수 있음.
+                ex) 큰 상수 생성
+                    LUI → 상위 부분 생성
+                    ADDI → 하위 부분 보완
+                    rd = imm << 12
+   2) AUIPC-TYPE (U-format) : 현재 PC를 기준으로 큰 주소를 만들기 위해 사용.
+                  PC + (상위 20bit Immediate << 12)를 rd에 저장하고,
+                  이후 JALR / Load / Store 등의 12bit Offset과 조합하여
+                  PC 기준의 먼 주소에 접근할 수 있음.
+                  rd = pc + (imm << 12)
 
 4. RAM Data Memory TYPE
     본 설계의 Data Memory는 Byte Addressing을 사용하며 내부적으로 Word 단위로 구성.
