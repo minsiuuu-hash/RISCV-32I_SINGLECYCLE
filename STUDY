@@ -81,12 +81,12 @@ Instruction Format = R / I / S / B / U / J 총 6가지
                 ex) 큰 상수 생성
                     LUI → 상위 부분 생성
                     ADDI → 하위 부분 보완
-                    rd = imm << 12
+                    rd = imm20 << 12
    2) AUIPC-TYPE (U-format) : 현재 PC를 기준으로 큰 주소를 만들기 위해 사용.
                   PC + (상위 20bit Immediate << 12)를 rd에 저장하고,
                   이후 JALR / Load / Store 등의 12bit Offset과 조합하여
                   PC 기준의 먼 주소에 접근할 수 있음.
-                  rd = pc + (imm << 12)
+                  rd = pc + (imm20 << 12)
 
 4. RAM Data Memory TYPE
     본 설계의 Data Memory는 Byte Addressing을 사용하며 내부적으로 Word 단위로 구성.
