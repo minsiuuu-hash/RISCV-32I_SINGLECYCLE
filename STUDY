@@ -80,9 +80,10 @@ Instruction Format = R / I / S / B / U / J 총 6가지
                    rd = pc + (imm << 12)
 
 4. RAM Data Memory TYPE
-    Data Memory는 word 형식으로 설계함.
-    Half Word의 경우 0,2,4 ... 짝수 주소만 허용되며, 나머지는 misaligned으로 지정.
-    Word의 경우 0 ,4 , 8 ... 4의 배수 주소만 허용되, 나머지는 misaligned으로 지정.
+    본 설계의 Data Memory는 Byte Addressing을 사용하며 내부적으로 Word 단위로 구성.
+    Byte     : 모든 주소 접근 가능
+    Halfword : 주소 하위 1bit가 0이어야 함 (2Byte 정렬) 0,2,4 ... 짝수만 허용, 나머지는 misaligned
+    Word     : 주소 하위 2bit가 00이어야 함 (4Byte 정렬) 0,4,8... 4의 배수만 허용, 나머지는 misaligned
     1)S-TYPE : "Store 명령어" 형식으로, Register File에 있는 데이터를 Data Memory에 저장할 때 사용한다.
                 ALU는 rs1 + imm를 계산하여 메모리 주소를 만들고, rs2의 값(Data Memory에 저장 할 값)을 해당 주소에 저장한다.
                 저장 크기에 따라 SB, SH, SW로 나뉘며 각각 8비트, 16비트, 32비트를 저장한다. 
