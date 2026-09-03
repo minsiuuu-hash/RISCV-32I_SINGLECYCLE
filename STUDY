@@ -58,7 +58,8 @@ LW 명령어는 레지스터 하나만 읽으면 되지만 대부분의 다른 �
 5. Data Memory = Data를 저장 or 불러오기 위한 memory
 6. Control Unit = CPU의 동작을 제어함 (총 6가지의 TYPE), img파일의 controlunit.png를 확인.
 
-총 6개의 TYPE(R,I,S,B,U,J)이지만, OPCODE가 총 9개가 존재하기에 9 TYPE으로 세분화해서 지정.
+Instruction Format = R / I / S / B / U / J 총 6가지
+본 설계의 Control Unit에서는 Opcode 및 동작에 따라 9개의 Control Case로 세분화하여 처리.
 
 1. 단순 연산 TYPE
    1) R-TYPE : Register에 저장되어있는 RS1, RS2값을 ALU를 통해 연산을 함
