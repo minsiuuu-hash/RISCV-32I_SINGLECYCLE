@@ -38,7 +38,10 @@ EXCEL 파일, 즉 스펙을 직접 확인해보면 알지만 , IMM값의 배치�
         sign extension을 decode와 병렬로 빨리 하려고 그렇게 배치함.
     3) B-type, J-type처럼 흩어진 배치는 immediate mux 비용과 signal fanout을 줄이기 위한 것임.
 
-컴퓨터의 성능은 명령어 개수, 클럭 사이클시간, 명령어당 클럭 사이클 수에 의해서 결정됌. 
+CPU 실행시간(컴퓨터 성능) = Instruction Count × CPI × Clock Cycle Time
+Instruction Count = 실행하는 명령어 개수
+CPI = 명령어당 평균 Clock Cycle 수
+Clock Cycle Time = Clock 한 주기의 시간
 따라서 Single-Cycle은 좋지않음.
 클럭 사이클이 모든 명령어에 대해 같은 길이를 가져야한다는 문제가 있음. 이 길이는 컴퓨터에서 가능한 경로 중 가장 긴 경로에 의해 결정됌.
 
