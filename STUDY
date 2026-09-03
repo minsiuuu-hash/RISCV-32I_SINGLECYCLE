@@ -51,7 +51,7 @@ PC를 메모리에 보내서 메모리로부터 명령어를 가져옴
 LW 명령어는 레지스터 하나만 읽으면 되지만 대부분의 다른 명령어는 레지스터 2개를 읽는다.  
 
 각 모듈 설명
-1. PC = Instruction의 실행순서를 결정, PC + 4(Byte Addressing) or JUMP(분기). 현재 명령어의 주소를 가지고 있는 레지스터.
+1. PC = Instruction의 실행순서를 결정, PC + 4(Byte Addressing) or Branch/Jump Target. 현재 명령어의 주소를 가지고 있는 레지스터.
 2. Instruction Memory(ROM) = Instruction을 저장한 memory, Byte Address를 사용. 프로그램의 명령어를 저장하고 주소가 주어지면 해당 명령어를 보내주는 메모리 유닛. 
 3. Register File = CPU 내부의 범용 Register 집합. 연산에 사용할 Operand를 읽고, 연산 결과를 저장함. 32개의 32-bit Register(x0 ~ x31)가 존재. x0는 항상 0으로 고정.
 4. ALU = 연산기( + , - , >> , and , or 등등), 출력 결과를 Register File or Memory에 저장
