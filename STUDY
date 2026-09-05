@@ -7,7 +7,7 @@ RISC (Reduced Instruction Set Computer)          CISC (Complex Instruction Set C
 | 실행 방식   | 한 명령어를 빠르게 처리하기 좋음   | 한 명령어가 많은 일을 할 수 있음 |
 | 메모리 접근 | 주로 LOAD/STORE만 메모리 접근     | 연산 명령어가 메모리 접근도 가능  |
 | 회로 구조   | 단순한 편                        | 복잡한 편               |
-| 예시        | ARM, RISC-V                     | x86                 |
+| 예시        | ARM, RISC-V                     | x86(intel)                 |
 
 ISA = Instruction Set Architecture, 명령어 집합 구조
 CPU가 어떤 명령어를 이해하고, 명령어 비트가 어떻게 생겼으며, 각 명령어가 어떤 동작을 해야 하는지를 정한 규칙
