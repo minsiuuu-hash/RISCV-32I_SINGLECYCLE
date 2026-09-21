@@ -62,6 +62,7 @@ ex) LW는 rs1, R-type은 rs1/rs2를 읽음.
                   본 설계에서는 Opcode 및 동작에 따라 9개의 Control Case로 분류. img파일의 controlunit.png를 확인.
 
 Instruction Format = R / I / S / B / U / J 총 6가지
+R = Register / I = Immediate / S = Store / B = Branch / U = Upper Immediate / J = Jump
 본 설계의 Control Unit에서는 Opcode 및 동작에 따라 9개의 Control Case로 세분화하여 처리.
 
 1. 단순 연산 TYPE
