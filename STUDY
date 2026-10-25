@@ -71,7 +71,10 @@ R = Register / I = Immediate / S = Store / B = Branch / U = Upper Immediate / J 
 
 2. 분기 / JUMP TYPE
    1) B-TYPE (B-format) : 돌아올 주소는 저장하지 않으며, 두 Register 값을 비교하고, 조건이 참이면 Target = PC + imm 으로 분기함.
-   2) JALR-TYPE (I-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, Target = (RS1 + Imm) & ~1 주소로 분기(JUMP)함. 최하위 비트를 0으로 만들어서 2Byte로 정렬함.
+   2) JALR-TYPE (I-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, Target = (RS1 + Imm) & ~1 주소로 분기(JUMP)함.
+    ~1을 하는 이유(최하위 비트를 0으로 만들어서 2Byte로 정렬함)
+    하드웨어 구현 단순화: JALR의 분기 주소 계산 로직을 약간 단순화할 수 있음.
+    함수 포인터 활용: 함수 포인터의 최하위 Bit에 부가 정보를 저장할 수 있음.
    3) JAL-TYPE (J-format) : 함수 호출 등에 사용되며, 돌아올 주소를 Register File에 PC+4로 저장하고, PC + Imm 주소로 분기(JUMP)함.
 
 3. 큰 상수/주소 TYPE
